@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+:root {
+  --background-color: black;
+  --foreground-color: white;
+  --primary-color: cyan;
+  --success-color: lightgreen;
+  --error-color: tomato;
+}
+
+/* elemental html tags */
+
+* {
+  color: var(--foreground-color);
+  font-family: "Victor Mono", monospace;
+}
+
+html {
+  background: var(--background-color);
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border-bottom: solid 1px var(--primary-color);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+
+  &:not(.button):hover {
+    text-decoration: underline;
+  }
+
+  &::before,
+  &::after {
+    display: inline-block;
+    padding: 0 0.5rem;
+    transition: transform 0.1s;
+  }
+
+  &:not(.button)::before {
+    content: "[";
+  }
+
+  &:not(.button)::after {
+    content: "]";
+  }
+
+  &:not(.button):hover::before {
+    transform: translateX(-0.5rem);
+  }
+
+  &:not(.button):hover::after {
+    transform: translateX(0.5rem);
+  }
+}
+
+/* display */
+
+.flex {
+  display: flex;
+}
+
+/* colors */
+
+.primary {
+  color: var(--primary-color);
+}
+
+.success {
+  color: var(--success-color);
+}
+
+.error {
+  color: var(--error-color);
+}
+
+/* ui styling */
+
+a.button {
+  margin: 1rem;
+  padding: 0.75rem;
+  border: solid 1px var(--primary-color);
+  border-radius: 0.5rem;
+  font-weight: bold;
+
+  transition: 0.25s background, 0.25s color;
+}
+
+a.button:hover {
+  background: var(--primary-color);
+  color: var(--background-color);
+}
