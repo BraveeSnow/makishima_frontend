@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
 
 const DISCORD_LOGIN_URI =
@@ -15,37 +13,31 @@ type UserPayload = {
 };
 
 function Account() {
-  const [cookies, _, removeCookie] = useCookies(["identity"]);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setUsername] = useState(undefined);
 
   useEffect(() => {
-    if (!cookies.identity) {
-      setLoggedIn(false);
-      return;
-    }
-
     (async () => {
       let authResponse = await axios.get("http://localhost:3000/verify", {
         withCredentials: true,
       });
 
       if (authResponse.status != 200) {
-        removeCookie("identity");
-        setLoggedIn(false);
         return;
       }
 
-      setLoggedIn(true);
+      setUsername(authResponse.data.username);
     })();
-  }, [loggedIn]);
+  }, [username]);
 
   return (
     <>
-      {loggedIn ? (
+      {username ? (
         <div className="flex">
           <p>
-            Welcome, {jwtDecode<UserPayload>(cookies.identity).username}!{" "}
-            <Link className="success" to="/panel">Control Panel</Link>
+            Welcome, {username}!{" "}
+            <Link className="success" to="/panel">
+              Control Panel
+            </Link>
             <a className="error" href="http://localhost:3000/logout">
               Log Out
             </a>
@@ -62,8 +54,11 @@ export default function NavBar() {
   return (
     <>
       <nav>
-        <div>
-          <p>Makishima</p>
+        <div className="flex">
+          <p>
+            Makishima{" "}
+            <Link to={"/"}>Home</Link>
+          </p>
         </div>
         <div>
           <Account />
